@@ -1,3 +1,27 @@
+//  Proximity Sensors
+#define L_Prox_sen 9
+#define R_Prox_sen 3
+#define F_Prox_sen A2
+
+//  Line Tracing Sensors
+#define L_Line_sen A1
+#define R_Line_sen A0
+
+//  Ultrasonic Distance Sensor
+#define Trig_pin 10
+#define Echo_pin 11
+
+// Left Motor A
+#define L_Motor_En_pin 6
+  //  Motor Rotation Controls
+#define L_Input_1 13
+#define L_Input_2 12
+
+// Right Motor B
+#define R_Motor_En_pin 5
+  //  Motor Rotation Controls
+#define R_Input_3 7
+#define R_Input_4 8
 
 
 void setup() {
@@ -28,7 +52,7 @@ void setup() {
 }
 
 void charge() {
-
+  
 }
 
 void traverseLeft() {
