@@ -1,32 +1,49 @@
 
-int outputPin = 3;
 
 void setup() {
-  pinMode(12, OUTPUT); //IN2
-  pinMode(13, OUTPUT); //IN1
-  pinMode(6, OUTPUT); //Enable Pin
-  pinMode(3, INPUT);
-}
-void loop() {
+//  Proximity Sensors
+  pinMode(9,INPUT); //Left Prox IR sen.
+  pinMode(3,INPUT); //Right Prox IR sen.
+  pinMode(A2,INPUT); //Front Prox IR sen.
+
+//  Line Tracing Sensors
+  pinMode(A1,INPUT); //Left Line Tracing sen.
+  pinMode(A0,INPUT); //Right Line Tracing sen.
+
+//  Ultrasonic Distance Sensor
+  pinMode(10,INPUT); //Trigger pin
+  pinMode(11,INPUT); //Echo pin
+
+//  Motor Controls
+  pinMode(6,OUTPUT); //Enable pin of Left Motor A
+  // Left Motor A Rotation Direction Controls  
+  pinMode(13,OUTPUT); //Input 1
+  pinMode(12,OUTPUT); //Input 2
   
-  if( digitalRead(outputPin) == HIGH)
-{
-         digitalWrite(12, LOW);     
+  pinMode(5,OUTPUT); //Enable pin of Right Motor B
+  // Right Motor B Rotation Direction Controls  
+  pinMode(7,OUTPUT); //Input 3
+  pinMode(8,OUTPUT); //Input 4
+
 }
-else                                
-{
-    delay(100);               
-    if( digitalRead(outputPin) == HIGH)    
-    {                               
-         digitalWrite(12, LOW);      
-    }
-    else                            
-    {
-        
-        digitalWrite(12, HIGH);     
-        digitalWrite(13, LOW);
-        digitalWrite(6, HIGH);
-        
-    }
+
+void charge() {
+
 }
+
+void traverseLeft() {
+
+}
+
+void traverseRight() {
+
+}
+
+void reverse() {
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
 }
