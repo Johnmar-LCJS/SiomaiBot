@@ -23,6 +23,8 @@
 #define R_Input_3 7
 #define R_Input_4 8
 
+int val;
+
 
 void setup() {
 //  Proximity Sensors
@@ -51,8 +53,40 @@ void setup() {
 
 }
 
-void charge() {
+void loop() {
+  if( digitalRead(F_Prox_sen) == 1) {
+    radialSearch();
+  } else {
+      delay(125);
+      if( digitalRead(F_Prox_sen) == 1) {
+        radialSearch();
+      } else {
+          digitalWrite(Trig_pin, LOW);
+          delay(2);
+          digitalWrite(Trig_pin, HIGH);
+          delay(10);
+          digitalWrite(Trig_pin, LOW);
+          int duration = pulseIn(Echo_pin, HIGH);
   
+          int distance = duration * 0.034 / 2;
+          // Work In Progress
+          if (distance > 50){
+            delay(500);
+            charge();
+          }
+        }
+      }
+
+}
+
+void charge() {
+  digitalWrite(L_Input_1, LOW);
+  digitalWrite(L_Input_2, HIGH);
+  digitalWrite(R_Input_3, LOW);
+  digitalWrite(R_Input_4, HIGH);
+  digitalWrite(L_Motor_En_pin, HIGH);
+  digitalWrite(R_Motor_En_pin, HIGH);
+  // Unfinished
 }
 
 void traverseLeft() {
@@ -63,11 +97,21 @@ void traverseRight() {
 
 }
 
-void reverse() {
+void radialSearch() {
   
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void stop() {
+  digitalWrite(L_Motor_En_pin, LOW);
+  digitalWrite(R_Motor_En_pin, LOW);
+}
 
+void reverse() {
+  digitalWrite(L_Input_1, HIGH);
+  digitalWrite(L_Input_2, LOW);
+  digitalWrite(R_Input_3, HIGH);
+  digitalWrite(R_Input_4, LOW);
+  digitalWrite(L_Motor_En_pin, HIGH);
+  digitalWrite(R_Motor_En_pin, HIGH);
+// Unfinished  
 }
