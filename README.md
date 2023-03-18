@@ -1,0 +1,2 @@
+# SiomaiBot
+Program for sumobot
