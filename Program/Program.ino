@@ -53,52 +53,41 @@ void setup() {
 
 }
 
-void loop() {
-  if( digitalRead(F_Prox_sen) == 1) {
-    radialSearch();
-  } else {
-      delay(125);
-      if( digitalRead(F_Prox_sen) == 1) {
-        radialSearch();
-      } else {
-          digitalWrite(Trig_pin, LOW);
-          delay(2);
-          digitalWrite(Trig_pin, HIGH);
-          delay(10);
-          digitalWrite(Trig_pin, LOW);
-          int duration = pulseIn(Echo_pin, HIGH);
-  
-          int distance = duration * 0.034 / 2;
-          // Work In Progress
-          if (distance > 50){
-            delay(500);
-            charge();
-          }
-        }
-      }
-
-}
-
 void charge() {
-  digitalWrite(L_Input_1, LOW);
-  digitalWrite(L_Input_2, HIGH);
-  digitalWrite(R_Input_3, LOW);
-  digitalWrite(R_Input_4, HIGH);
+  digitalWrite(L_Input_1, HIGH);
+  digitalWrite(L_Input_2, LOW);
+  digitalWrite(R_Input_3, HIGH);
+  digitalWrite(R_Input_4, LOW);
   digitalWrite(L_Motor_En_pin, HIGH);
   digitalWrite(R_Motor_En_pin, HIGH);
   // Unfinished
 }
 
 void traverseLeft() {
-
+  digitalWrite(L_Input_1, LOW);
+  digitalWrite(L_Input_2, HIGH);
+  digitalWrite(R_Input_3, HIGH);
+  digitalWrite(R_Input_4, LOW);
+  analogWrite(L_Motor_En_pin, 100);
+  analogWrite(R_Motor_En_pin, 100);
 }
 
 void traverseRight() {
-
+  digitalWrite(L_Input_1, HIGH);
+  digitalWrite(L_Input_2, LOW);
+  digitalWrite(R_Input_3, LOW);
+  digitalWrite(R_Input_4, HIGH);
+  analogWrite(L_Motor_En_pin, 100);
+  analogWrite(R_Motor_En_pin, 100);
 }
 
 void radialSearch() {
-  
+  digitalWrite(L_Input_1, LOW);
+  digitalWrite(L_Input_2, HIGH);
+  digitalWrite(R_Input_3, HIGH);
+  digitalWrite(R_Input_4, LOW);
+  analogWrite(L_Motor_En_pin, 100);
+  analogWrite(R_Motor_En_pin, 100);
 }
 
 void stop() {
@@ -115,3 +104,39 @@ void reverse() {
   digitalWrite(R_Motor_En_pin, HIGH);
 // Unfinished  
 }
+
+void loop() {
+  if( digitalRead(F_Prox_sen) == 1) {
+    stop();
+  } else {
+      delay(125);
+      if( digitalRead(F_Prox_sen) == 1) {
+        stop();
+      } else {
+          digitalWrite(Trig_pin, LOW);
+          delay(2);
+          digitalWrite(Trig_pin, HIGH);
+          delay(10);
+          digitalWrite(Trig_pin, LOW);
+          int duration = pulseIn(Echo_pin, HIGH);
+  
+          int distance = duration * 0.034 / 2;
+          // Work In Progress
+          if (distance <= 50) {
+            charge();
+          }
+      }                 
+    }
+
+  if (digitalRead(L_Prox_sen) == 0) {
+    traverseLeft();
+  } else {
+    if (digitalRead(R_Prox_sen) == 0) {
+      traverseRight();
+    }
+  }
+
+}
+
+
+
