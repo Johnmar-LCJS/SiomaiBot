@@ -1,6 +1,6 @@
 //  Proximity Sensors
-#define L_Prox_sen 9
-#define R_Prox_sen 3
+#define L_Prox_sen A3
+#define R_Prox_sen A4
 #define F_Prox_sen A2
 
 //  Line Tracing Sensors
@@ -28,8 +28,8 @@ int val;
 
 void setup() {
 //  Proximity Sensors
-  pinMode(9,INPUT); //Left Prox IR sen.
-  pinMode(3,INPUT); //Right Prox IR sen.
+  pinMode(A3,INPUT); //Left Prox IR sen.
+  pinMode(A4,INPUT); //Right Prox IR sen.
   pinMode(A2,INPUT); //Front Prox IR sen.
 
 //  Line Tracing Sensors
@@ -111,7 +111,7 @@ void loop() {
   } else {
       delay(125);
       if( digitalRead(F_Prox_sen) == 1) {
-        stop();
+         stop();      
       } else {
           digitalWrite(Trig_pin, LOW);
           delay(2);
@@ -127,15 +127,6 @@ void loop() {
           }
       }                 
     }
-
-  if (digitalRead(L_Prox_sen) == 0) {
-    traverseLeft();
-  } else {
-    if (digitalRead(R_Prox_sen) == 0) {
-      traverseRight();
-    }
-  }
-
 }
 
 
