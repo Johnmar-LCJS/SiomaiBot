@@ -124,7 +124,7 @@ void loop() {
   
   distance = duration * 0.034 / 2;
   
-  while (digitalRead(F_Prox_sen) == 0 && distance <= 60) {
+  if (digitalRead(F_Prox_sen) == 0 && distance <= 60) {
     stop();
     delay(100);
     charge();
