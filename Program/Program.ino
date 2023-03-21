@@ -23,7 +23,8 @@
 #define R_Input_3 7
 #define R_Input_4 8
 
-int val;
+long duration;
+int distance;
 
 
 void setup() {
@@ -68,8 +69,8 @@ void traverseLeft() {
   digitalWrite(L_Input_2, HIGH);
   digitalWrite(R_Input_3, HIGH);
   digitalWrite(R_Input_4, LOW);
-  analogWrite(L_Motor_En_pin, 100);
-  analogWrite(R_Motor_En_pin, 100);
+  analogWrite(L_Motor_En_pin, 195);
+  analogWrite(R_Motor_En_pin, 195);
 }
 
 void traverseRight() {
@@ -77,8 +78,8 @@ void traverseRight() {
   digitalWrite(L_Input_2, LOW);
   digitalWrite(R_Input_3, LOW);
   digitalWrite(R_Input_4, HIGH);
-  analogWrite(L_Motor_En_pin, 100);
-  analogWrite(R_Motor_En_pin, 100);
+  analogWrite(L_Motor_En_pin, 195);
+  analogWrite(R_Motor_En_pin, 195);
 }
 
 void radialSearch() {
@@ -86,8 +87,8 @@ void radialSearch() {
   digitalWrite(L_Input_2, HIGH);
   digitalWrite(R_Input_3, HIGH);
   digitalWrite(R_Input_4, LOW);
-  analogWrite(L_Motor_En_pin, 100);
-  analogWrite(R_Motor_En_pin, 100);
+  analogWrite(L_Motor_En_pin, 195);
+  analogWrite(R_Motor_En_pin, 195);
 }
 
 void stop() {
@@ -100,33 +101,47 @@ void reverse() {
   digitalWrite(L_Input_2, LOW);
   digitalWrite(R_Input_3, HIGH);
   digitalWrite(R_Input_4, LOW);
-  digitalWrite(L_Motor_En_pin, HIGH);
-  digitalWrite(R_Motor_En_pin, HIGH);
+  analogWrite(L_Motor_En_pin, 175);
+  analogWrite(R_Motor_En_pin, 175);
+  delay(1000)
+  analogWrite(L_Motor_En_pin, LOW);
+  analogWrite(R_Motor_En_pin, LOW);
 // Unfinished  
 }
 
 void loop() {
-  if( digitalRead(F_Prox_sen) == 1) {
-    stop();
-  } else {
-      delay(125);
-      if( digitalRead(F_Prox_sen) == 1) {
-         stop();      
-      } else {
-          digitalWrite(Trig_pin, LOW);
-          delay(2);
-          digitalWrite(Trig_pin, HIGH);
-          delay(10);
-          digitalWrite(Trig_pin, LOW);
-          int duration = pulseIn(Echo_pin, HIGH);
+
+  digitalWrite(Trig_pin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(Trig_pin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(Trig_pin, LOW);
+  duration = pulseIn(Echo_pin, HIGH);
   
-          int distance = duration * 0.034 / 2;
-          // Work In Progress
-          if (distance <= 50) {
-            charge();
-          }
-      }                 
-    }
+  distance = duration * 0.034 / 2;
+  
+  while (digitalRead(F_Prox_sen) == 0 && distance <= 60) {
+    charge();
+  }
+
+  else if (digitalRead(L_Line_sen) == 0 || digitalRead(R_Line_sen) == 0) {
+    reverse();
+  }
+
+  else if (digitalRead(L_Prox_sen) == 0 && !digitalRead(R_Prox_sen) == 0) {
+    traverseLeft();
+  }
+
+  else if (!digitalRead(L_Prox_sen) == 0 && digitalRead(R_Prox_sen) == 0) {
+    traverseRight();
+  }
+
+  else if (!digitalRead(L_Prox_sen) && !digitalRead(R_Prox_sen) && !digitalRead(F_Prox_sen) && !digitalRead(L_Prox_sen) && !digitalRead(R_Prox_sen) && distance > 60) {
+    stop();
+    delay(100);
+    radialSearch();
+  }  
+  
 }
 
 
