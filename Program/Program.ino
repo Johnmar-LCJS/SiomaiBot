@@ -92,18 +92,22 @@ void radialSearch() {
 }
 
 void stop() {
+  digitalWrite(L_Input_1, LOW);
+  digitalWrite(L_Input_2, LOW);
+  digitalWrite(R_Input_3, LOW);
+  digitalWrite(R_Input_4, LOW);
   digitalWrite(L_Motor_En_pin, LOW);
   digitalWrite(R_Motor_En_pin, LOW);
 }
 
 void reverse() {
-  digitalWrite(L_Input_1, HIGH);
-  digitalWrite(L_Input_2, LOW);
-  digitalWrite(R_Input_3, HIGH);
-  digitalWrite(R_Input_4, LOW);
+  digitalWrite(L_Input_1, LOW);
+  digitalWrite(L_Input_2, HIGH);
+  digitalWrite(R_Input_3, LOW);
+  digitalWrite(R_Input_4, HIGH);
   analogWrite(L_Motor_En_pin, 175);
   analogWrite(R_Motor_En_pin, 175);
-  delay(1000)
+  delay(500);
   analogWrite(L_Motor_En_pin, LOW);
   analogWrite(R_Motor_En_pin, LOW);
 // Unfinished  
@@ -121,6 +125,8 @@ void loop() {
   distance = duration * 0.034 / 2;
   
   while (digitalRead(F_Prox_sen) == 0 && distance <= 60) {
+    stop();
+    delay(100);
     charge();
   }
 
